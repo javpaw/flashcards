@@ -1,0 +1,60 @@
+{%extends "main/main_base.html"%}
+
+
+{% block head_css_page %}
+  <style type="text/css">
+    #trainning-space{
+      height:500px; 
+    }
+
+    #front-card{
+      height: 500px;  
+    }
+
+    .helper{
+      height:50%;
+    }
+  </style>
+{% endblock head_css_page %}
+
+
+{%block content%}
+<div class="container">
+  <div id="trainning-space" class="row">
+
+    <div class="span7">
+      <div id="front-card" class="thumbnail">
+        <h3>Thumbnail label</h3>
+        <p>Thumbnail caption</p>
+      </div>
+    </div>
+
+    <div class="span5">
+        <div id="time" class="row helper">
+            <div class="span5 thumbnail">
+                <h3>Thumbnail label</h3>
+                <p>Thumbnail caption</p>
+            </div>
+        </div>
+
+
+        <div id="back" class="row helper">
+            <div class="span5 thumbnail">
+                <h3>Thumbnail label</h3>
+                <p>Thumbnail caption</p>
+            </div>
+        </div>
+   
+
+    </div>
+  </div>
+
+  <div id="controls" class="row">
+    <div class="span12">
+    </div>
+  </div>
+
+
+</div>
+{%endblock content%}
+
