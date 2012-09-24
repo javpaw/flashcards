@@ -1,0 +1,47 @@
+{%extends "base.html"%}
+
+{%block ngapp%} ng-app="fcApp" {%endblock%}
+
+{% block head_css_page %}
+  <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}main/css/index.css">
+{% endblock head_css_page %}
+
+
+{%block header%}
+<div class="container">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" href="#">FlashCards</a>
+      <ul class="nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{%endblock header%}
+
+{%block content%}
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <section>
+      <h3 class="subject-title">Subject 1</h3>
+
+      <ul class="thumbnails">
+        <li class="span3">
+          <div class="thumbnail">
+          <h3>Thumbnail label</h3>
+          <p>Thumbnail caption</p>
+          </div>
+        </li>
+      
+      </ul>
+      </section>
+
+      <h3 class="subject-title">Subject 2</h3>
+    </div>
+  </div>  
+</div>
+{%endblock content%}
