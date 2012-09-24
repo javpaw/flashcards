@@ -1,7 +1,7 @@
 'use strict';
 
 
-var fcApp = angular.module('fcApp',['fcApp.directives','fcApp.services']).// ['fcApp.filters', 'fcApp.services', 'fcApp.directives','ngResource']).
+var fcApp = angular.module('fcApp',[]).// ['fcApp.filters', 'fcApp.services', 'fcApp.directives','ngResource']).
   config([
    '$interpolateProvider',function($interpolateProvider){
     $interpolateProvider.startSymbol('<{');

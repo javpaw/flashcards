@@ -17,3 +17,9 @@
   </div>
 </div>
 {%endblock header%}
+
+
+{% block footer_javascript_section %}
+  <script type="text/javascript" src="{{STATIC_URL}}main/jsapp/controllers.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}main/jsapp/mainapp.js"></script>
+{% endblock footer_javascript_section %}
