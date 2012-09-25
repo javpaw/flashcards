@@ -3,7 +3,8 @@ function trainerController($scope){
     Main controller for a training session with a bundle of flashcards.
   */
 
-  var minLevel = 1; //Minimum accepted level
+  var initLevel = 1; //Minimum accepted level
+  var minLevel = 1;
   var maxLevel = 3; //Default numbers of levels to practice starting at 0
   var firstTime = true; //flag to check initialization of the training session
   var state = 'active'; //state of the training session the other option is finished
@@ -11,9 +12,9 @@ function trainerController($scope){
 
 
   $scope.flashCards = [
-    {title:'fc1', desc:"flashcard number 1",level:1},
-    {title:'fc2', desc:"flashcard number 2",level:1},
-    {title:'fc3', desc:"flashcard number 3",level:1}
+    {title:'fc1', desc:"flashcard number 1",level:initLevel},
+    {title:'fc2', desc:"flashcard number 2",level:initLevel},
+    {title:'fc3', desc:"flashcard number 3",level:initLevel}
   ];
 
   $scope.fcsByLevel = {};//Stores the fsc by level 
@@ -75,8 +76,9 @@ function trainerController($scope){
       case 37:
         deleteFromLevel($scope.currentFc);
 
-        $scope.currentFc.level--;
-        if($scope.currentFc.level<minLevel){$scope.currentFc.level=minLevel}
+        $scope.currentFc.level = initLevel;
+        console.log('level',$scope.currentFc.level);
+        if($scope.currentFc.level<initLevel){$scope.currentFc.level=initLevel}
         addToLevel($scope.currentFc);
 
         $scope.currentFc = $scope.currentFcs[$scope.currentIndex];

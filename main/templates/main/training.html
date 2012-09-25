@@ -33,7 +33,12 @@
         <div id="time" class="row helper">
             <div class="span5 thumbnail">
                 <h3>Thumbnail label</h3>
-                <p> <{fcsByLevel }> </p>
+                <ul>
+                   <li ng-repeat="level in fcsByLevel">
+                      <{level.length}>
+                   </li> 
+                </ul>
+
             </div>
         </div>
 
