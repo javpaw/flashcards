@@ -2,27 +2,49 @@ function trainerController($scope){
   /*
     Main controller for a training session with a bundle of flashcards.
   */
- 
+
+  var minLevel = 1; //Minimum accepted level
+  var maxLevel = 3; //Default numbers of levels to practice starting at 0
+  var firstTime = true; //flag to check initialization of the training session
+  var state = 'active'; //state of the training session the other option is finished
+
+
+
   $scope.flashCards = [
-    {title:'fc1', desc:"flashcard number 1",level:0},
-    {title:'fc2', desc:"flashcard number 2",level:0},
-    {title:'fc3', desc:"flashcard number 3",level:0}
+    {title:'fc1', desc:"flashcard number 1",level:1},
+    {title:'fc2', desc:"flashcard number 2",level:1},
+    {title:'fc3', desc:"flashcard number 3",level:1}
   ];
+
+  $scope.fcsByLevel = {};//Stores the fsc by level 
+  var initNumFcsByLevel = function(){
+    _.each(_.range(minLevel,maxLevel+1),function(item){
+        $scope.fcsByLevel[item]=[];
+    });
+    $scope.fcsByLevel[minLevel]= $scope.flashCards;
+  }
+
+  initNumFcsByLevel();
+
+  var deleteFromLevel = function(fc){
+    $scope.fcsByLevel[fc.level] =_.reject($scope.fcsByLevel[fc.level],function(item){
+        return item === fc;
+    });
+  }
+
+  var addToLevel =function(fc){
+    $scope.fcsByLevel[fc.level].push(fc)
+  }
 
   var startFc = {title:'Start', desc:"right arrow to start",level:0};//Special flashcard for initial instructions
   var finishFc = {title:'Finish', desc:"Congratulations!!! You completed your training",level:0};//special flashcard for a finished session  
-
-  var maxLimit = 3; //Default numbers of levels to practice starting at 0
-  var firstTime = true; //flag to check initialization of the training session
-  var state = 'active'; //state of the training session the other option is finished
-  var minLevel = 0;//initial level for all the fc cards
-
+  
   var nextLevel = function(){
     /*
     At the end of one level check if the training is finished and get the cards for the next level
     */
     minLevel = _.min($scope.flashCards,function(item){return item.level;}).level;
-    if (minLevel >= maxLimit){
+    if (minLevel >= maxLevel){
       state = "finished";
     }
     else{
@@ -33,6 +55,9 @@ function trainerController($scope){
 
 
   $scope.currentFc = startFc;
+  $scope.currentFcs = _.filter($scope.flashCards,function(num){return $scope.minLevel===$scope.minLevel;});
+  $scope.currentIndex = 0;
+
   
   $scope.$watch('key_changed',function(){
     /*
@@ -48,8 +73,19 @@ function trainerController($scope){
 
     switch($scope.key){
       case 37:
-      console.log("left");
-      break;
+        deleteFromLevel($scope.currentFc);
+
+        $scope.currentFc.level--;
+        if($scope.currentFc.level<minLevel){$scope.currentFc.level=minLevel}
+        addToLevel($scope.currentFc);
+
+        $scope.currentFc = $scope.currentFcs[$scope.currentIndex];
+        $scope.currentIndex+=1;
+        if($scope.currentIndex>=$scope.currentFcs.length){
+          nextLevel();        
+        }
+
+        break;
 
       case 38:
       console.log("up");
@@ -57,13 +93,18 @@ function trainerController($scope){
 
       case 39:
         if(firstTime){
-          nextLevel();
+          $scope.currentFc = $scope.currentFcs[$scope.currentIndex];
+          $scope.currentIndex+=1;
           firstTime=false;
         }
-        console.log("right",$scope.currentFcs);
-        $scope.currentFc = $scope.currentFcs[$scope.currentIndex];
-        $scope.currentFc.level++;
-        $scope.currentIndex+=1;
+        else{
+          deleteFromLevel($scope.currentFc);
+          $scope.currentFc.level++;
+          if($scope.currentFc.level>maxLevel){$scope.currentFc.level=maxLevel}
+          addToLevel($scope.currentFc);
+          $scope.currentFc = $scope.currentFcs[$scope.currentIndex];
+          $scope.currentIndex+=1;
+        }
         if($scope.currentIndex>=$scope.currentFcs.length){
           nextLevel();        
         }
